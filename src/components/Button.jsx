@@ -50,7 +50,7 @@ const ButtonContent = styled.div`
 const StyledButton = props => {
   const { children, StartIcon, ...rest } = props;
   return (
-    <Button {...rest}>
+    <Button type='button' {...rest}>
       {StartIcon ? (
         <ButtonContent>
           <StartIcon size="30px" />

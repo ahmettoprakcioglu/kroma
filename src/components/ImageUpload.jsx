@@ -8,9 +8,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  flex-grow: 1;
   justify-content: center;
   width: 100%;
-  height: 100%;
   border-radius: var(--border-radius-lg);
   border: solid 1px var(--warm-grey);
   background-color: var(--off-white);
@@ -40,7 +40,6 @@ const TextContainer = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: var(--greyish-brown);
-
 `;
 
 const ImageUpload = () => {

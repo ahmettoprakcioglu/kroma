@@ -22,9 +22,9 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 3.2rem;
+  height: 100%;
 
   background-color: var(--color-grey-50);
-	min-height: 100%;
   background-image: radial-gradient(var(--white) 2px, transparent 2px);
   background-size: 20px 20px;
 `;
@@ -35,6 +35,8 @@ const MainContent = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
+  flex-grow: 1;
+  margin: 16px;
 `;
 
 const ContentTitle = styled.h1`
