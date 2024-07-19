@@ -7,12 +7,20 @@ const variant = {
     font-size: 20px;
     color: var(--light-sage);
     border: none;
+
+    &:hover {
+      background-color: #171717;
+    }
   `,
   secondary: css`
     border: solid 1px var(--black-two);
     background-color: var(--light-sage);
     color: var(--black-two);
     font-size: 16px;
+
+    &:hover {
+      background-color: #ebebeb;
+    }
   `
 };
 
