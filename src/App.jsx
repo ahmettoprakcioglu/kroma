@@ -7,7 +7,7 @@ function App() {
       <GlobalStyles />
       <AppLayout />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
