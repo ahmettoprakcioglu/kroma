@@ -28,6 +28,7 @@ const GlobalStyles = createGlobalStyle`
 body {
   font-family: "IBM Plex Mono", monospace;
   background-color: var(--off-white-two);
+  height: 100vh;
 }
 
 .h1-Bold {

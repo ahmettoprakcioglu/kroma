@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { IMAGE_UPLOAD_DESC, MAX_UPLOAD_SIZE, SUPPORTED_IMAGE_FORMAT, UPLOAD_FROM_COMPUTER } from '../constants/text';
 import { CloudUpload } from '@carbon/icons-react';
 import StyledButton from './Button';
+import { useRef } from 'react';
+import { func } from 'prop-types';
 
 const Container = styled.div`
   display: flex;
@@ -42,16 +44,46 @@ const TextContainer = styled.div`
   color: var(--greyish-brown);
 `;
 
-const ImageUpload = () => {
+const ImageUpload = ({
+  setSelectedImage
+}) => {
+  const fileInputRef = useRef();
+
+  const openFileDialog = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = ({ target: { result } }) => {
+        setSelectedImage(result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Container>
       <ImageUploadDesc>{IMAGE_UPLOAD_DESC}</ImageUploadDesc>
       <StyledButton
         StartIcon={CloudUpload}
         size='large'
+        onClick={openFileDialog}
       >
         {UPLOAD_FROM_COMPUTER}
       </StyledButton>
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleImageUpload}
+      />
       <TextContainer>
         <p>{SUPPORTED_IMAGE_FORMAT}</p>
         <p>{MAX_UPLOAD_SIZE}</p>
@@ -61,3 +93,11 @@ const ImageUpload = () => {
 };
 
 export default ImageUpload;
+
+ImageUpload.propTypes = {
+  setSelectedImage: func
+};
+
+ImageUpload.defaultProps = {
+  setSelectedImage: f => f
+};

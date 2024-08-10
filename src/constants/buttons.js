@@ -40,3 +40,12 @@ export const BUTTONS = [
     variant: 'secondary'
   }
 ];
+
+export const PROTANOMALY = 'Protanomaly';
+export const DEUTERANOMALY = 'Deuteranomaly';
+export const TRITANOMALY = 'Tritanomaly';
+export const PROTANOPIA = 'Protanopia';
+export const DEUTERANOPIA = 'Deuteranopia';
+export const TRITANOPIA = 'Tritanopia';
+export const MONOCHROMACY = 'Monochromacy';
+export const ACHROMATOPSIA = 'Achromatopsia';

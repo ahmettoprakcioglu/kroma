@@ -3,15 +3,19 @@ import ButtonContainer from './ButtonContainer';
 import Header from './Header';
 import styled from 'styled-components';
 import ImageUpload from './ImageUpload';
+import { useRef, useState } from 'react';
+import ImagePreview from './ImagePreview';
+import ImageActionButtons from './ImageActionButtons';
 
 const Main = styled.main`
+  flex: 1;
   background-color: var(--color-grey-50);
   padding: 4rem 4.8rem 6.4rem;
 `;
 
 const StyledAppLayout = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
 `;
 
@@ -35,7 +39,7 @@ const MainContent = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  flex-grow: 1;
+  flex: 1;
   margin: 16px;
 `;
 
@@ -51,6 +55,11 @@ const ContentTitle = styled.h1`
 `;
 
 const AppLayout = () => {
+  const canvasRef = useRef();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [filteredImage, setFilteredImage] = useState(null);
+  console.log('selectedImage: ', selectedImage);
+
   return (
     <StyledAppLayout>
       <Header />
@@ -58,8 +67,19 @@ const AppLayout = () => {
         <Container>
           <MainContent>
             <ContentTitle>{MAIN_CONTENT_TITLE}</ContentTitle>
-            <ButtonContainer />
-            <ImageUpload />
+            <ButtonContainer
+              originalImage={selectedImage}
+              setFilteredImage={setFilteredImage}
+              canvasRef={canvasRef}
+            />
+            {selectedImage ? (
+              <ImagePreview
+                originalImage={selectedImage}
+                filteredImage={filteredImage} 
+                canvasRef={canvasRef}
+              />
+            ) : <ImageUpload setSelectedImage={setSelectedImage} />}
+            {selectedImage && <ImageActionButtons setSelectedImage={setSelectedImage} setFilteredImage={setFilteredImage} />}
           </MainContent>
         </Container>
       </Main>
