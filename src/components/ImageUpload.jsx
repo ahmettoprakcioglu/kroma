@@ -63,7 +63,7 @@ const ImageUpload = ({
     const file = e.target.files[0];
     const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'];
     const MAX_SIZE_MB = 10;
-    
+
     if (file && ALLOWED_TYPES.includes(file.type)) {
       const fileSizeMB = file.size / 1024 / 1024;
       if (fileSizeMB <= MAX_SIZE_MB) {
@@ -76,9 +76,11 @@ const ImageUpload = ({
         reader.readAsDataURL(file);
       } else {
         toast.error(`File size (${fileSizeMB.toFixed(2)} MB) exceeds the maximum allowed size of ${MAX_SIZE_MB} MB.`);
+        fileInputRef.current.value = '';
       }
     } else {
       toast.error(`File (${file?.type || 'undefined'}) not supported.`);
+      fileInputRef.current.value = '';
     }
   };
 
