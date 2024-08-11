@@ -56,7 +56,7 @@ const ButtonContainer = ({
     };
   };
 
-  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)');
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 832px)');
 
   const isMediumDevice = useMediaQuery(
     'only screen and (min-width : 769px) and (max-width : 1475px)'

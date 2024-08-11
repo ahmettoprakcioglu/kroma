@@ -53,7 +53,7 @@ const ImageUpload = ({
   setSelectedImage
 }) => {
   const fileInputRef = useRef();
-  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)');
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 832px)');
 
   const openFileDialog = () => {
     fileInputRef.current.click();

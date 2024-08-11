@@ -64,7 +64,7 @@ const AppLayout = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [filteredImage, setFilteredImage] = useState(null);
 
-  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)');
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 832px)');
 
   return (
     <StyledAppLayout>
