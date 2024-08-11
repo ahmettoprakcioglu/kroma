@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
 import { ACHROMATOMALY, ACHROMATOPSIA, BUTTONS, DEUTERANOMALY, DEUTERANOPIA, PROTANOMALY, PROTANOPIA, TRITANOMALY, TRITANOPIA } from '../constants/buttons';
+import toast from 'react-hot-toast';
 
 const applyMatrix = (ctx, matrix) => {
   const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -21,7 +22,7 @@ const applyMatrix = (ctx, matrix) => {
 };
 
 export const applyFilterToCtx = async (ctx, filter) => {
-  if (filter === 'default') {
+  if (filter === 'Default') {
     const matrix = [
       1, 0, 0, 0, 0,
       0, 1, 0, 0, 0,
@@ -126,5 +127,6 @@ export const downloadAll = async (originalImage) => {
 
   zip.generateAsync({ type: 'blob' }).then((content) => {
     saveAs(content, 'kromaFilteredImages.zip');
+    toast.success('All filtered images have been downloaded successfully.');
   });
 };

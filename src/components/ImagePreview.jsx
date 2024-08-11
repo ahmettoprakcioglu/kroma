@@ -7,7 +7,8 @@ const Container = styled.div`
   flex-grow: 1;
   justify-content: center;
   width: 100%;
-  height: 620px;
+  height: 520px;
+  padding: 8px;
   border-radius: var(--border-radius-lg);
   border: solid 1px var(--warm-grey);
   background-color: var(--off-white);
@@ -16,6 +17,7 @@ const Container = styled.div`
 const StyledImage = styled.img`
   max-width: 100%;
   max-height: 100%;
+  border-radius: var(--border-radius-lg);
   width: auto;
   height: auto;
 `;

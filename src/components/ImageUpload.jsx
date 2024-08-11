@@ -1,9 +1,13 @@
-import styled from 'styled-components';
-import { IMAGE_UPLOAD_DESC, MAX_UPLOAD_SIZE, SUPPORTED_IMAGE_FORMAT, UPLOAD_FROM_COMPUTER } from '../constants/text';
-import { CloudUpload } from '@carbon/icons-react';
-import StyledButton from './Button';
-import { useRef } from 'react';
 import { func } from 'prop-types';
+import { useRef } from 'react';
+import styled from 'styled-components';
+
+import { CloudUpload } from '@carbon/icons-react';
+import toast from 'react-hot-toast';
+
+import { IMAGE_UPLOAD_DESC, MAX_UPLOAD_SIZE, SUPPORTED_IMAGE_FORMAT, UPLOAD, UPLOAD_FROM_COMPUTER } from '../constants/text';
+import StyledButton from './Button';
+import { useMediaQuery } from '@uidotdev/usehooks';
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +17,7 @@ const Container = styled.div`
   flex-grow: 1;
   justify-content: center;
   width: 100%;
+  padding: 13px;
   border-radius: var(--border-radius-lg);
   border: solid 1px var(--warm-grey);
   background-color: var(--off-white);
@@ -48,6 +53,7 @@ const ImageUpload = ({
   setSelectedImage
 }) => {
   const fileInputRef = useRef();
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)');
 
   const openFileDialog = () => {
     fileInputRef.current.click();
@@ -55,8 +61,9 @@ const ImageUpload = ({
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-
-    if (file) {
+    const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg'];
+    
+    if (file && ALLOWED_TYPES.includes(file?.type)) {
       const reader = new FileReader();
 
       reader.onload = ({ target: { result } }) => {
@@ -64,6 +71,8 @@ const ImageUpload = ({
       };
 
       reader.readAsDataURL(file);
+    } else {
+      toast.error(`File(${file?.type || 'undefined'}) not supported.`);
     }
   };
 
@@ -75,7 +84,7 @@ const ImageUpload = ({
         size='large'
         onClick={openFileDialog}
       >
-        {UPLOAD_FROM_COMPUTER}
+        {isSmallDevice ? UPLOAD: UPLOAD_FROM_COMPUTER}
       </StyledButton>
       <input
         type="file"
