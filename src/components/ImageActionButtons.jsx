@@ -3,12 +3,14 @@ import StyledButton from './Button';
 import { func, string } from 'prop-types';
 import { downloadAll } from '../utils';
 import { useMediaQuery } from '@uidotdev/usehooks';
+import { Download, Reset, TrashCan } from '@carbon/icons-react';
 
 const ActionButtonsWrapper = styled.div`
   ${props => props.isSmallDevice && css`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    width: 100%;
   `};
 
   ${props => !props.isSmallDevice && css`
@@ -33,10 +35,12 @@ const ImageActionButtons = ({
     <ActionButtonsWrapper isSmallDevice={isSmallDevice}>
       <StyledButton
         onClick={() => downloadAll(originalImage)}
+        StartIcon={Download}
       >
         Download
       </StyledButton>
       <StyledButton
+        StartIcon={Reset}
         onClick={() => {
           setFilteredImage(null);
         }}
@@ -44,10 +48,12 @@ const ImageActionButtons = ({
         Reset
       </StyledButton>
       <StyledButton
+        StartIcon={TrashCan}
         onClick={() => {
           setSelectedImage(null);
           setFilteredImage(null);
         }}
+        style={{ gridColumnStart: 1, gridColumnEnd: -1 }}
       >
         Remove
       </StyledButton>

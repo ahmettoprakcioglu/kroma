@@ -34,14 +34,12 @@ const variant = {
 
 const size = {
   medium: css`
-    width: 150px;
     height: 45px;
-    padding: 12px 8px;
+    padding: 12px 24px;
   `,
   large: css`
-    width: 318px;
     height: 62px;
-    padding: 16px;
+    padding: 16px 24px;
   `
 };
 
@@ -60,16 +58,19 @@ const Button = styled.button`
 const ButtonContent = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 `;
 
 const StyledButton = props => {
   const { children, StartIcon, ...rest } = props;
+
+  const { variant: buttonVariant, size: buttonSize } = rest;
+
   return (
     <Button type='button' {...rest}>
       {StartIcon ? (
         <ButtonContent>
-          <StartIcon size="30px" />
+          <StartIcon size={buttonSize === 'medium' ? '24' : '30'} style={{ fill: buttonVariant === 'primary' ? '#fcfefb' : '#242424' }} />
           {children}
         </ButtonContent>
       ) : children}
