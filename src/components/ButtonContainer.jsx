@@ -35,6 +35,7 @@ Container.defaultProps = {
 
 const ButtonContainer = ({
   originalImage,
+  filteredImage,
   setFilteredImage,
   canvasRef
 }) => {
@@ -80,7 +81,7 @@ const ButtonContainer = ({
           );
         })}
       </Container>
-      {isSmallDevice && <Dropdown applyFilter={applyFilter} originalImage={originalImage} />}
+      {isSmallDevice && <Dropdown applyFilter={applyFilter} originalImage={originalImage} filteredImage={filteredImage} />}
     </>
   );
 };
@@ -89,12 +90,14 @@ export default ButtonContainer;
 
 ButtonContainer.propTypes = {
   originalImage: string,
+  filteredImage: string,
   setFilteredImage: func,
   canvasRef: object
 };
 
 ButtonContainer.defaultProps = {
   originalImage: '',
+  filteredImage: '',
   setFilteredImage: f => f,
   canvasRef: {}
 };

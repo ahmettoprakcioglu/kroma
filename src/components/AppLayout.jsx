@@ -1,17 +1,22 @@
 import { MAIN_CONTENT_TITLE } from '../constants/text';
 import ButtonContainer from './ButtonContainer';
 import Header from './Header';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ImageUpload from './ImageUpload';
 import { useRef, useState } from 'react';
 import ImagePreview from './ImagePreview';
 import ImageActionButtons from './ImageActionButtons';
+import { useMediaQuery } from '@uidotdev/usehooks';
 
 const Main = styled.main`
   flex: 1;
   background-color: var(--color-grey-50);
-  padding: 4rem 4.8rem 6.4rem;
+  ${props => !props.isSmallDevice && css`padding: 4rem 4.8rem 6.4rem;`};
 `;
+
+Main.defaultProps = {
+  isSmallDevice: false
+};
 
 const StyledAppLayout = styled.div`
   display: flex;
@@ -59,15 +64,18 @@ const AppLayout = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [filteredImage, setFilteredImage] = useState(null);
 
+  const isSmallDevice = useMediaQuery('only screen and (max-width : 768px)');
+
   return (
     <StyledAppLayout>
       <Header />
-      <Main>
+      <Main isSmallDevice={isSmallDevice}>
         <Container>
           <MainContent>
             <ContentTitle>{MAIN_CONTENT_TITLE}</ContentTitle>
             <ButtonContainer
               originalImage={selectedImage}
+              filteredImage={filteredImage}
               setFilteredImage={setFilteredImage}
               canvasRef={canvasRef}
             />

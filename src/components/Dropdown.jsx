@@ -68,7 +68,8 @@ const Icon = styled(ChevronDown)`
 
 const Dropdown = ({
   applyFilter,
-  originalImage
+  originalImage,
+  filteredImage
 }) => {
   const [isOpen, setIsOpen] = useState();
   const [selectedOption, setOption] = useState('Default');
@@ -79,6 +80,14 @@ const Dropdown = ({
       applyFilter(selectedOption);
     }
   }, [selectedOption]);
+
+  useEffect(() => {
+    setOption('Default');
+  }, [originalImage]);
+
+  useEffect(() => {
+    if (!filteredImage) setOption('Default');
+  }, [filteredImage]);
 
   return (
     <DropdownWrapper>
@@ -108,10 +117,12 @@ export default Dropdown;
 
 Dropdown.propTypes = {
   applyFilter: func,
-  originalImage: string
+  originalImage: string,
+  filteredImage: string
 };
 
 Dropdown.defaultProps = {
   applyFilter: f => f,
-  originalImage: ''
+  originalImage: '',
+  filteredImage: ''
 };
