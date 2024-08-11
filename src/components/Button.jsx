@@ -11,6 +11,10 @@ const variant = {
     &:hover {
       background-color: #171717;
     }
+
+    &:focus {
+      background-color: #171717;
+    }
   `,
   secondary: css`
     border: solid 1px var(--black-two);
@@ -19,6 +23,10 @@ const variant = {
     font-size: 16px;
 
     &:hover {
+      background-color: #ebebeb;
+    }
+
+    &:focus {
       background-color: #ebebeb;
     }
   `

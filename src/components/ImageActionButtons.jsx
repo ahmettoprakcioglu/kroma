@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import StyledButton from './Button';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
+import { downloadAll } from '../utils';
 
 const ActionButtonsWrapper = styled.div`
   display: flex;
@@ -9,16 +10,20 @@ const ActionButtonsWrapper = styled.div`
 `;
 
 const ImageActionButtons = ({
+  originalImage,
   setSelectedImage,
   setFilteredImage
 }) => {
 
   return (
     <ActionButtonsWrapper>
-      <StyledButton>Download</StyledButton>
+      <StyledButton
+        onClick={() => downloadAll(originalImage)}
+      >
+        Download
+      </StyledButton>
       <StyledButton
         onClick={() => {
-          setSelectedImage(null);
           setFilteredImage(null);
         }}
       >
@@ -26,10 +31,11 @@ const ImageActionButtons = ({
       </StyledButton>
       <StyledButton
         onClick={() => {
+          setSelectedImage(null);
           setFilteredImage(null);
         }}
       >
-        Default
+        Remove
       </StyledButton>
     </ActionButtonsWrapper>
   );
@@ -38,11 +44,13 @@ const ImageActionButtons = ({
 export default ImageActionButtons;
 
 ImageActionButtons.propTypes = {
+  originalImage: string,
   setSelectedImage: func,
   setFilteredImage: func
 };
 
 ImageActionButtons.defaultProps = {
+  originalImage: '',
   setSelectedImage: f => f,
   setFilteredImage: f => f
 };

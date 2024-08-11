@@ -31,7 +31,7 @@ export const BUTTONS = [
   },
   {
     id: 7,
-    text: 'Monochromacy',
+    text: 'Achromatomaly',
     variant: 'secondary'
   },
   {
@@ -47,5 +47,5 @@ export const TRITANOMALY = 'Tritanomaly';
 export const PROTANOPIA = 'Protanopia';
 export const DEUTERANOPIA = 'Deuteranopia';
 export const TRITANOPIA = 'Tritanopia';
-export const MONOCHROMACY = 'Monochromacy';
+export const ACHROMATOMALY = 'Achromatomaly';
 export const ACHROMATOPSIA = 'Achromatopsia';

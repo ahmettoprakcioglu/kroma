@@ -58,7 +58,6 @@ const AppLayout = () => {
   const canvasRef = useRef();
   const [selectedImage, setSelectedImage] = useState(null);
   const [filteredImage, setFilteredImage] = useState(null);
-  console.log('selectedImage: ', selectedImage);
 
   return (
     <StyledAppLayout>
@@ -79,7 +78,7 @@ const AppLayout = () => {
                 canvasRef={canvasRef}
               />
             ) : <ImageUpload setSelectedImage={setSelectedImage} />}
-            {selectedImage && <ImageActionButtons setSelectedImage={setSelectedImage} setFilteredImage={setFilteredImage} />}
+            {selectedImage && <ImageActionButtons originalImage={selectedImage} setSelectedImage={setSelectedImage} setFilteredImage={setFilteredImage} />}
           </MainContent>
         </Container>
       </Main>

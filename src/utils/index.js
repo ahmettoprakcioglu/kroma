@@ -1,4 +1,7 @@
-import { ACHROMATOPSIA, DEUTERANOMALY, DEUTERANOPIA, MONOCHROMACY, PROTANOMALY, PROTANOPIA, TRITANOMALY, TRITANOPIA } from '../constants/buttons';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+
+import { ACHROMATOMALY, ACHROMATOPSIA, BUTTONS, DEUTERANOMALY, DEUTERANOPIA, PROTANOMALY, PROTANOPIA, TRITANOMALY, TRITANOPIA } from '../constants/buttons';
 
 const applyMatrix = (ctx, matrix) => {
   const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -26,11 +29,11 @@ export const applyFilterToCtx = async (ctx, filter) => {
       0, 0, 0, 1, 0
     ];
     applyMatrix(ctx, matrix);
-  } else if (filter === MONOCHROMACY) {
+  } else if (filter === ACHROMATOMALY) {
     const matrix = [
-      0.299, 0.587, 0.114, 0, 0,
-      0.299, 0.587, 0.114, 0, 0,
-      0.299, 0.587, 0.114, 0, 0,
+      0.618, 0.320, 0.062, 0, 0,
+      0.163, 0.775, 0.062, 0, 0,
+      0.163, 0.320, 0.516, 0, 0,
       0, 0, 0, 1, 0
     ];
     applyMatrix(ctx, matrix);
@@ -91,4 +94,37 @@ export const applyFilterToCtx = async (ctx, filter) => {
     ];
     applyMatrix(ctx, matrix);
   }
+};
+
+export const downloadAll = async (originalImage) => {
+  const zip = new JSZip();
+  const colorBlindness = BUTTONS.map(({ text }) => text);
+
+  for (const element of colorBlindness) {
+    const canvasCopy = document.createElement('canvas');
+    const ctxCopy = canvasCopy.getContext('2d');
+
+    const img = new Image();
+    img.src = originalImage;
+
+    await new Promise((resolve) => {
+      img.onload = async () => {
+        canvasCopy.width = img.width;
+        canvasCopy.height = img.height;
+        ctxCopy.drawImage(img, 0, 0, img.width, img.height);
+
+        await applyFilterToCtx(ctxCopy, element);
+
+        const dataUrl = canvasCopy.toDataURL();
+        const base64Data = dataUrl.replace(/^data:image\/png;base64,/, '');
+        zip.file(`filteredImage_${element}.png`, base64Data, { base64: true });
+
+        resolve();
+      };
+    });
+  }
+
+  zip.generateAsync({ type: 'blob' }).then((content) => {
+    saveAs(content, 'kromaFilteredImages.zip');
+  });
 };
