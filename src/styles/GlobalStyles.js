@@ -30,69 +30,6 @@ body {
   background-color: var(--off-white-two);
   height: 100vh;
 }
-
-.h1-Bold {
-  font-size: 51px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-}
-.h1-Regular {
-  font-family: IBMPlexMono;
-  font-size: 51px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-}
-.h2-Regular {
-  font-family: IBMPlexMono;
-  font-size: 38px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-}
-.h3-Regular {
-  font-family: IBMPlexMono;
-  font-size: 28px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-}
-.h4-Regular {
-  font-family: IBMPlexMono;
-  font-size: 21px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.4;
-  letter-spacing: normal;
-}
-.body-Regular {
-  font-family: IBMPlexMono;
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-}
-.info-Regular {
-  font-family: IBMPlexMono;
-  font-size: 12px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-}
 `;
 
 export default GlobalStyles;

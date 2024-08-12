@@ -61,7 +61,7 @@ const ImageUpload = ({
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg'];
+    const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml'];
     const MAX_SIZE_MB = 10;
 
     if (file && ALLOWED_TYPES.includes(file.type)) {
@@ -96,7 +96,7 @@ const ImageUpload = ({
       </StyledButton>
       <input
         type="file"
-        accept="image/*"
+        accept="image/png, image/jpeg, image/jpg', image/svg+xml"
         ref={fileInputRef}
         style={{ display: 'none' }}
         onChange={handleImageUpload}

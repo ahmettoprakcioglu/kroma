@@ -1,4 +1,5 @@
 import { node, string } from 'prop-types';
+import { ClipLoader } from 'react-spinners';
 import styled, { css } from 'styled-components';
 
 const variant = {
@@ -49,6 +50,7 @@ const Button = styled.button`
   align-items: center;
   flex-grow: 0;
   font-weight: 500;
+  font-family: "IBM Plex Mono", monospace;
   cursor: pointer;
   border-radius: var(--border-radius-sm);
   ${props => variant[props.variant]}
@@ -64,16 +66,31 @@ const ButtonContent = styled.div`
 const StyledButton = props => {
   const { children, StartIcon, ...rest } = props;
 
-  const { variant: buttonVariant, size: buttonSize } = rest;
+  const { variant: buttonVariant, size: buttonSize, isLoading = false, loaderText = 'Loading', disabled = false } = rest;
 
   return (
-    <Button type='button' {...rest}>
-      {StartIcon ? (
-        <ButtonContent>
-          <StartIcon size={buttonSize === 'medium' ? '24' : '30'} style={{ fill: buttonVariant === 'primary' ? '#fcfefb' : '#242424' }} />
-          {children}
-        </ButtonContent>
-      ) : children}
+    <Button type='button' {...rest} disabled={disabled || isLoading}>
+      <>
+        {isLoading ? (
+          <ButtonContent>
+            <ClipLoader
+              color={buttonVariant === 'primary' ? '#fcfefb' : '#242424'}
+              loading={true}
+              size={buttonSize === 'medium' ? 24 : 30}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+            <span>{`${loaderText}...`}</span>
+          </ButtonContent>
+        ) : (
+          StartIcon ? (
+            <ButtonContent>
+              <StartIcon size={buttonSize === 'medium' ? '24' : '30'} style={{ fill: buttonVariant === 'primary' ? '#fcfefb' : '#242424' }} />
+              {children}
+            </ButtonContent>
+          ) : children
+        )}
+      </>
     </Button>
   );
 };

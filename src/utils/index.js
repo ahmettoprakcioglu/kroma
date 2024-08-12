@@ -97,7 +97,8 @@ export const applyFilterToCtx = async (ctx, filter) => {
   }
 };
 
-export const downloadAll = async (originalImage) => {
+export const downloadAll = async (originalImage, setIsLoading) => {
+  setIsLoading(true);
   const zip = new JSZip();
   const colorBlindness = BUTTONS.map(({ text }) => text);
 
@@ -127,6 +128,7 @@ export const downloadAll = async (originalImage) => {
 
   zip.generateAsync({ type: 'blob' }).then((content) => {
     saveAs(content, 'kromaFilteredImages.zip');
+    setIsLoading(false);
     toast.success('All filtered images have been downloaded successfully.');
   });
 };

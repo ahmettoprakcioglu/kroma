@@ -4,6 +4,7 @@ import { func, string } from 'prop-types';
 import { downloadAll } from '../utils';
 import { useMediaQuery } from '@uidotdev/usehooks';
 import { Download, Reset, TrashCan } from '@carbon/icons-react';
+import { useState } from 'react';
 
 const ActionButtonsWrapper = styled.div`
   ${props => props.isSmallDevice && css`
@@ -29,18 +30,23 @@ const ImageActionButtons = ({
   setSelectedImage,
   setFilteredImage
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const isSmallDevice = useMediaQuery('only screen and (max-width : 832px)');
 
   return (
     <ActionButtonsWrapper isSmallDevice={isSmallDevice}>
       <StyledButton
-        onClick={() => downloadAll(originalImage)}
+        onClick={() => downloadAll(originalImage, setIsLoading)}
         StartIcon={Download}
+        isLoading={isLoading}
+        loaderText='Downloading'
       >
         Download
       </StyledButton>
       <StyledButton
         StartIcon={Reset}
+        disabled={isLoading}
         onClick={() => {
           setFilteredImage(null);
         }}
@@ -49,6 +55,7 @@ const ImageActionButtons = ({
       </StyledButton>
       <StyledButton
         StartIcon={TrashCan}
+        disabled={isLoading}
         onClick={() => {
           setSelectedImage(null);
           setFilteredImage(null);
