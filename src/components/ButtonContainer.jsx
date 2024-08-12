@@ -39,20 +39,32 @@ const ButtonContainer = ({
   setFilteredImage,
   canvasRef
 }) => {
+
   const applyFilter = (filter) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-
+  
+    if (!canvas || !ctx) {
+      console.error('Canvas or context not found.');
+      return;
+    }
+  
     const img = new Image();
     img.src = originalImage;
-
+  
     img.onload = () => {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
+  
       applyFilterToCtx(ctx, filter);
+  
       const filteredDataUrl = canvas.toDataURL();
       setFilteredImage(filteredDataUrl);
+    };
+  
+    img.onerror = (error) => {
+      console.error('Error loading image:', error);
     };
   };
 
