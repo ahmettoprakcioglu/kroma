@@ -1,5 +1,15 @@
 import styled, { css } from 'styled-components';
-import { BUTTONS } from '../constants/buttons';
+import { 
+  BUTTONS, 
+  PROTANOMALY, 
+  DEUTERANOMALY, 
+  TRITANOMALY, 
+  PROTANOPIA, 
+  DEUTERANOPIA,
+  TRITANOPIA,
+  ACHROMATOPSIA,
+  BLUE_CONE_MONOCHROMACY
+} from '../constants/buttons';
 import StyledButton from './Button';
 import { func, object, string } from 'prop-types';
 import { applyFilterToCtx } from '../utils';
@@ -40,6 +50,31 @@ const ButtonContainer = ({
   canvasRef
 }) => {
 
+  // Filtre adı ile doğru sabit değeri eşleştiren yardımcı fonksiyon
+  const getFilterConstant = (filterName) => {
+    // Direkt string karşılaştırma yaparak sabit değişkenlere dönüştür
+    if (filterName === 'Protanomaly') {
+      return PROTANOMALY;
+    } else if (filterName === 'Deuteranomaly') {
+      return DEUTERANOMALY;
+    } else if (filterName === 'Tritanomaly') {
+      return TRITANOMALY;
+    } else if (filterName === 'Protanopia') {
+      return PROTANOPIA;
+    } else if (filterName === 'Deuteranopia') {
+      return DEUTERANOPIA;
+    } else if (filterName === 'Tritanopia') {
+      return TRITANOPIA;
+    } else if (filterName === 'Achromatopsia') {
+      return ACHROMATOPSIA;
+    } else if (filterName === 'Blue Cone Monochromacy') {
+      return BLUE_CONE_MONOCHROMACY;
+    } else {
+      // Default
+      return filterName;
+    }
+  };
+
   const applyFilter = (filter) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -56,8 +91,10 @@ const ButtonContainer = ({
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
-  
-      applyFilterToCtx(ctx, filter);
+      
+      // Filtre adını sabit değere dönüştür
+      const filterConstant = getFilterConstant(filter);
+      applyFilterToCtx(ctx, filterConstant);
   
       const filteredDataUrl = canvas.toDataURL();
       setFilteredImage(filteredDataUrl);

@@ -31,12 +31,12 @@ export const BUTTONS = [
   },
   {
     id: 7,
-    text: 'Achromatomaly',
+    text: 'Achromatopsia',
     variant: 'secondary'
   },
   {
     id: 8,
-    text: 'Achromatopsia',
+    text: 'Blue Cone Monochromacy',
     variant: 'secondary'
   }
 ];
@@ -47,5 +47,5 @@ export const TRITANOMALY = 'Tritanomaly';
 export const PROTANOPIA = 'Protanopia';
 export const DEUTERANOPIA = 'Deuteranopia';
 export const TRITANOPIA = 'Tritanopia';
-export const ACHROMATOMALY = 'Achromatomaly';
 export const ACHROMATOPSIA = 'Achromatopsia';
+export const BLUE_CONE_MONOCHROMACY = 'Blue Cone Monochromacy';
