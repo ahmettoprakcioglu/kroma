@@ -13,6 +13,25 @@ const variant = {
       background-color: #171717;
     }
 
+    ${({ isSelected = false, disabled = false }) => {
+    if (isSelected && !disabled) {
+      return css`
+          background-color: #171717;
+        `;
+    }
+  }}
+
+${({ disabled = false }) => {
+    if (disabled) {
+      return css`
+          cursor: no-drop;
+          &:hover {
+            background-color: var(--black-two);
+          }
+        `;
+    }
+  }}
+
     &:focus {
       background-color: #171717;
     }
@@ -26,6 +45,27 @@ const variant = {
     &:hover {
       background-color: #ebebeb;
     }
+
+    ${({ isSelected = false, disabled = false }) => {
+    if (isSelected && !disabled) {
+      return css`
+          background-color: #ebebeb;
+        `;
+    }
+  }}
+
+    ${({ disabled = false }) => {
+    if (disabled) {
+      return css`
+          cursor: no-drop;
+          &:hover {
+            background-color: var(--light-sage);
+          }
+        `;
+    }
+  }}
+
+
 
     &:focus {
       background-color: #ebebeb;

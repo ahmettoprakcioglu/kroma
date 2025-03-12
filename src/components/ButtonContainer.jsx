@@ -15,6 +15,7 @@ import { func, object, string } from 'prop-types';
 import { applyFilterToCtx } from '../utils';
 import { useMediaQuery } from '@uidotdev/usehooks';
 import Dropdown from './Dropdown';
+import { useState } from 'react';
 
 const deviceSize = {
   default: css`
@@ -49,10 +50,9 @@ const ButtonContainer = ({
   setFilteredImage,
   canvasRef
 }) => {
+  const [selectedFilter, setSelectedFilter] = useState('');
 
-  // Filtre adı ile doğru sabit değeri eşleştiren yardımcı fonksiyon
   const getFilterConstant = (filterName) => {
-    // Direkt string karşılaştırma yaparak sabit değişkenlere dönüştür
     if (filterName === 'Protanomaly') {
       return PROTANOMALY;
     } else if (filterName === 'Deuteranomaly') {
@@ -92,7 +92,6 @@ const ButtonContainer = ({
       canvas.height = img.height;
       ctx.drawImage(img, 0, 0, img.width, img.height);
       
-      // Filtre adını sabit değere dönüştür
       const filterConstant = getFilterConstant(filter);
       applyFilterToCtx(ctx, filterConstant);
   
@@ -119,9 +118,12 @@ const ButtonContainer = ({
             <StyledButton
               key={id}
               variant={variant}
+              isSelected={selectedFilter === text}
+              disabled={!originalImage}
               onClick={() => {
                 if (originalImage) {
                   applyFilter(text);
+                  setSelectedFilter(text);
                 }
               }}
             >
