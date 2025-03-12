@@ -1,6 +1,6 @@
 import { ChevronDown } from '@carbon/icons-react';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BUTTONS } from '../constants/buttons';
 import { func, string } from 'prop-types';
 
@@ -26,14 +26,12 @@ const DropdownContent = styled.div`
   align-items: center;
   justify-content: center;
   /* flex-wrap: wrap; */
-  gap: 16px;
   position: absolute;
   min-width: 100%;
-  max-height: 300px;
+  max-height: 262px;
   overflow-x: auto;
   z-index: 10;
   scroll-behavior: smooth;
-  padding: 20px 24px;
   top: 53px;
   border-radius: var(--border-radius-sm);
   border: solid 1px var(--black-two);
@@ -47,8 +45,20 @@ const DropdownContentItem = styled.div`
   justify-content: center;
   border-bottom: 2px solid #ebebeb;
   width: 100%;
-  padding-bottom: 15px;
+  padding-block: 15px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ebebeb;
+  }
+
+  ${({ isSelected = false }) => {
+    if (isSelected) {
+      return css`
+        background-color: #ebebeb;
+      `;
+    }
+  }}
 
   &:last-child {
     border: none;
@@ -88,7 +98,7 @@ const Dropdown = ({
   useEffect(() => {
     if (!filteredImage) setOption('Default');
   }, [filteredImage]);
-
+  
   return (
     <DropdownWrapper>
       <StyledDropdownButton onClick={() => setIsOpen(curr => !curr)}>
@@ -99,10 +109,14 @@ const Dropdown = ({
         <DropdownContent>
           {dropdownOptions.map((option, index) => {
             return (
-              <DropdownContentItem key={index} onClick={() => {
-                setOption(option);
-                setIsOpen(false);
-              }}>
+              <DropdownContentItem
+                key={index}
+                onClick={() => {
+                  setOption(option);
+                  setIsOpen(false);
+                }}
+                isSelected={selectedOption === option}
+              >
                 {option}
               </DropdownContentItem>
             );
