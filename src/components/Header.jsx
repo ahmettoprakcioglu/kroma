@@ -13,10 +13,16 @@ const StyledHeader = styled.header`
     align-items: center;
 `;
 
-const StyledLogo = styled.div`
+const LogoLink = styled(Link)`
     color: var(--black-two);
     font-weight: 600;
     font-size: 1.25rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #000;
+    }
 `;
 
 const UserSection = styled.div`
@@ -39,7 +45,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <StyledLogo>Kroma</StyledLogo>
+      <LogoLink to="/">Kroma</LogoLink>
       {user ? (
         <UserSection>
           <UserEmail>{user.email}</UserEmail>

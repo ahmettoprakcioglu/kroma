@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useAuth } from '../../context/AuthContext';
 import StyledButton from '../Button';
-import { Image } from '@carbon/icons-react';
+import GoogleIcon from './GoogleIcon';
 import { useNavigate } from 'react-router-dom';
 
 const AuthForm = ({ type }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const { signIn, signUp, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
@@ -22,7 +23,10 @@ const AuthForm = ({ type }) => {
         await signIn(email, password);
         navigate('/dashboard');
       } else {
-        await signUp(email, password, confirmPassword);
+        if (!fullName.trim()) {
+          throw new Error('Full name is required');
+        }
+        await signUp(email, password, confirmPassword, fullName);
         // For signup, we don't navigate immediately because user needs to verify email
       }
     } catch (err) {
@@ -46,6 +50,19 @@ const AuthForm = ({ type }) => {
     <StyledForm onSubmit={handleSubmit}>
       <Title>{type === 'signin' ? 'Sign In' : 'Sign Up'}</Title>
       {error && <ErrorMessage>{error}</ErrorMessage>}
+      {type === 'signup' && (
+        <InputGroup>
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input
+            id="fullName"
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            placeholder="Enter your full name"
+            required
+          />
+        </InputGroup>
+      )}
       <InputGroup>
         <Label htmlFor="email">Email</Label>
         <Input
@@ -53,6 +70,7 @@ const AuthForm = ({ type }) => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email address"
           required
         />
       </InputGroup>
@@ -63,6 +81,7 @@ const AuthForm = ({ type }) => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter your password"
           required
         />
       </InputGroup>
@@ -74,6 +93,7 @@ const AuthForm = ({ type }) => {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm your password"
             required
           />
         </InputGroup>
@@ -92,7 +112,7 @@ const AuthForm = ({ type }) => {
           variant="secondary"
           size="medium"
           onClick={handleGoogleSignIn}
-          StartIcon={Image}
+          StartIcon={GoogleIcon}
         >
           Continue with Google
         </StyledButton>

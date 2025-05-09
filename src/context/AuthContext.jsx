@@ -22,17 +22,23 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email, password, confirmPassword) => {
+  const signUp = async (email, password, confirmPassword, fullName) => {
     try {
       if (password !== confirmPassword) {
         throw new Error("Passwords don't match");
       }
       
-      const { error } = await supabase.auth.signUp({
+      const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: fullName
+          }
+        }
       });
-      if (error) throw error;
+
+      if (signUpError) throw signUpError;
       toast.success('Check your email for verification link');
     } catch (error) {
       toast.error(error.message);
