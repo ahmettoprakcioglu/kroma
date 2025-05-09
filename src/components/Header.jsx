@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { useAuth } from '../context/AuthContext';
+import StyledButton from './Button';
+import { Logout } from '@carbon/icons-react';
 
 const StyledHeader = styled.header`
     padding: 32px 30px;
@@ -6,10 +9,14 @@ const StyledHeader = styled.header`
     border-bottom: 1px solid var(--greyish);
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `;
 
 const StyledLogo = styled.div`
     max-width: 192px;
+    color: var(--black-two);
+    font-weight: 600;
+    font-size: 1.25rem;
 `;
 
 const HeaderTitle = styled.span`
@@ -24,11 +31,37 @@ const HeaderTitle = styled.span`
   color: var(--black-two);
 `;
 
+const UserSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const UserEmail = styled.span`
+  color: var(--greyish-brown);
+  font-size: 0.875rem;
+`;
+
 const Header = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <StyledHeader>
-      <StyledLogo>Logo</StyledLogo>
+      <StyledLogo>Kroma</StyledLogo>
       <HeaderTitle>Create visible interfaces for everyone</HeaderTitle>
+      {user && (
+        <UserSection>
+          <UserEmail>{user.email}</UserEmail>
+          <StyledButton 
+            variant="secondary" 
+            onClick={signOut}
+            StartIcon={Logout}
+            size="medium"
+          >
+            Sign Out
+          </StyledButton>
+        </UserSection>
+      )}
     </StyledHeader>
   );
 };
