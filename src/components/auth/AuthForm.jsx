@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useAuth } from '../../context/AuthContext';
 import StyledButton from '../Button';
-import GoogleIcon from './GoogleIcon';
+import { Image } from '@carbon/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthForm = ({ type }) => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const AuthForm = ({ type }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const { signIn, signUp, signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +20,10 @@ const AuthForm = ({ type }) => {
     try {
       if (type === 'signin') {
         await signIn(email, password);
+        navigate('/dashboard');
       } else {
         await signUp(email, password, confirmPassword);
+        // For signup, we don't navigate immediately because user needs to verify email
       }
     } catch (err) {
       setError(err.message);
@@ -30,6 +34,9 @@ const AuthForm = ({ type }) => {
     e.preventDefault();
     try {
       await signInWithGoogle();
+      // Google sign in will automatically redirect after success
+      // due to OAuth flow, but we can add navigation here as fallback
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     }
@@ -85,7 +92,7 @@ const AuthForm = ({ type }) => {
           variant="secondary"
           size="medium"
           onClick={handleGoogleSignIn}
-          StartIcon={GoogleIcon}
+          StartIcon={Image}
         >
           Continue with Google
         </StyledButton>

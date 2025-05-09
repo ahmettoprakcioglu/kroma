@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 import StyledButton from './Button';
 import { Logout } from '@carbon/icons-react';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
     padding: 32px 30px;
@@ -13,22 +14,9 @@ const StyledHeader = styled.header`
 `;
 
 const StyledLogo = styled.div`
-    max-width: 192px;
     color: var(--black-two);
     font-weight: 600;
     font-size: 1.25rem;
-`;
-
-const HeaderTitle = styled.span`
-  flex-grow: 0;
-  font-size: 20px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: right;
-  color: var(--black-two);
 `;
 
 const UserSection = styled.div`
@@ -42,14 +30,17 @@ const UserEmail = styled.span`
   font-size: 0.875rem;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 const Header = () => {
   const { user, signOut } = useAuth();
 
   return (
     <StyledHeader>
       <StyledLogo>Kroma</StyledLogo>
-      <HeaderTitle>Create visible interfaces for everyone</HeaderTitle>
-      {user && (
+      {user ? (
         <UserSection>
           <UserEmail>{user.email}</UserEmail>
           <StyledButton 
@@ -60,6 +51,19 @@ const Header = () => {
           >
             Sign Out
           </StyledButton>
+        </UserSection>
+      ) : (
+        <UserSection>
+          <StyledLink to="/signin">
+            <StyledButton variant="secondary" size="medium">
+              Sign In
+            </StyledButton>
+          </StyledLink>
+          <StyledLink to="/signup">
+            <StyledButton variant="primary" size="medium">
+              Sign Up
+            </StyledButton>
+          </StyledLink>
         </UserSection>
       )}
     </StyledHeader>

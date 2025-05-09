@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 import AuthForm from '../components/auth/AuthForm';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
+  const { user } = useAuth();
+
+  // Redirect if user is already authenticated
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <Container>
       <AuthForm type="signin" />
