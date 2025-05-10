@@ -7,6 +7,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Landing from './pages/Landing';
 import PropTypes from 'prop-types';
+import SavedImagesPage from './pages/SavedImagesPage';
 
 const AuthenticatedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -42,6 +43,7 @@ function App() {
               </AuthenticatedRoute>
             }
           />
+          <Route path="/saved-images" element={<SavedImagesPage />} />
         </Routes>
         <Toaster
           position="top-center"

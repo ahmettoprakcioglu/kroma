@@ -3,10 +3,11 @@ import ButtonContainer from './ButtonContainer';
 import Header from './Header';
 import styled, { css } from 'styled-components';
 import ImageUpload from './ImageUpload';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import ImagePreview from './ImagePreview';
 import ImageActionButtons from './ImageActionButtons';
 import { useMediaQuery } from '@uidotdev/usehooks';
+import { useLocation } from 'react-router-dom';
 
 const Main = styled.main`
   flex: 1;
@@ -63,8 +64,17 @@ const AppLayout = () => {
   const canvasRef = useRef();
   const [selectedImage, setSelectedImage] = useState(null);
   const [filteredImage, setFilteredImage] = useState(null);
-
   const isSmallDevice = useMediaQuery('only screen and (max-width : 832px)');
+  const location = useLocation();
+
+  // Handle image from saved images page
+  useEffect(() => {
+    if (location.state?.selectedImage) {
+      setSelectedImage(location.state.selectedImage);
+      // Clear the state to prevent reloading on subsequent navigation
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   return (
     <StyledAppLayout>
