@@ -198,9 +198,25 @@ const SavedImagesPage = () => {
     }
   };
 
-  const handleImageSelect = (imageUrl) => {
-    // Navigate to home with the selected image
-    navigate('/', { state: { selectedImage: imageUrl } });
+  const handleImageSelect = async (imageUrl) => {
+    try {
+      // Fetch the image and convert to base64
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      
+      // Convert blob to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        // Navigate to dashboard with the base64 image data
+        navigate('/dashboard', { state: { selectedImage: base64data } });
+      };
+    } catch (error) {
+      console.error('Error processing image:', error);
+      toast.error('Failed to load image');
+    }
   };
 
   if (!user) {
